@@ -5,7 +5,7 @@ Three.js-powered RTS camera with simple buildings &amp; landscape
 
 To do:
 ===
-- [ ] Canvas initialization
+- [x] Canvas initialization
 - [ ] Flat terrain
 - [ ] Moving camera
 - [ ] Simple terrain & textured buildings
