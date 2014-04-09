@@ -150,7 +150,16 @@ rtsCameraControl.prototype = {
 			delta = -event.detail / 3;
 		}
 		
-		// zoom & check bounds afterwards
+		var currentFov = this.camera.fov;
+		currentFov -= delta;
+		if (currentFov < 45) {
+			currentFov = 45;
+		}
+		if (currentFov > 75) {
+			currentFov = 75;
+		}
+		this.camera.fov = currentFov;
+		this.camera.updateProjectionMatrix();
 		
 	}
 
