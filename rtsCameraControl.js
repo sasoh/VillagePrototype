@@ -6,7 +6,15 @@ function rtsCameraControl(camera, options) {
 	this.moveSpeed = options.moveSpeed || 1;
 	this.domElement.addEventListener('keydown', this.onKeyDown.bind(this), false);
 	this.domElement.addEventListener('keyup', this.onKeyUp.bind(this), false);
-
+	this.domElement.addEventListener('mousedown', this.onTouchStart.bind(this), false );
+	this.domElement.addEventListener('mousemove', this.onTouchMove.bind(this), false );
+	this.domElement.addEventListener('mouseup', this.onTouchEnd.bind(this), false );
+	this.domElement.addEventListener('mousewheel', this.onMouseWheel.bind(this), false );
+	this.domElement.addEventListener('DOMMouseScroll', this.onMouseWheel.bind(this), false ); // firefox
+	
+	this.dragging = false;
+	this.mouseVector = new THREE.Vector3();
+	
 }
 
 function checkMapBounds() {
@@ -50,6 +58,8 @@ rtsCameraControl.prototype = {
 			this.camera.translateX(this.moveSpeed);
 		}
 
+		this.camera.position.add(this.mouseVector);
+		
 		checkMapBounds();
 	},
 	onKeyDown: function (event) {
@@ -99,6 +109,49 @@ rtsCameraControl.prototype = {
 				break;
 			}
 		}
+	},
+	onTouchStart: function (event) {
+	
+		// check for object intersection?
+		
+		// if no intersection, start dragging
+		this.dragging = true;
+		this.startPositionX = event.clientX;
+		this.startPositionY = event.clientY;
+		
+		this.mouseVector.set(0, 0, 0);
+		
+	},
+	onTouchMove: function (event) {
+	
+		if (this.dragging == true) {
+			var currentPositionX = event.clientX;
+			var currentPositionY = event.clientY;
+			
+			this.mouseVector.set((this.startPositionX - currentPositionX) / this.moveSpeed, 0, (this.startPositionY - currentPositionY) / this.moveSpeed);
+		}
+
+		// autoscroll?
+	
+	},
+	onTouchEnd: function (event) {
+	
+		this.dragging = false;
+		this.mouseVector.set(0, 0, 0);
+		
+	},
+	onMouseWheel: function (event) {
+	
+		var delta = 0;
+
+		if (event.wheelDelta) { // WebKit / Opera / Explorer 9
+			delta = event.wheelDelta / 40;
+		} else if (event.detail) { // Firefox
+			delta = -event.detail / 3;
+		}
+		
+		// zoom & check bounds afterwards
+		
 	}
 
 };
