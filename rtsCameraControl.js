@@ -119,20 +119,35 @@ rtsCameraControl.prototype = {
 		this.startPositionX = event.clientX;
 		this.startPositionY = event.clientY;
 		
-		this.mouseVector.set(0, 0, 0);
-		
 	},
 	onTouchMove: function (event) {
 	
+		this.mouseVector.set(0, 0, 0);
+		var currentPositionX = event.clientX;
+		var currentPositionY = event.clientY;
+		
 		if (this.dragging == true) {
-			var currentPositionX = event.clientX;
-			var currentPositionY = event.clientY;
-			
 			this.mouseVector.set((this.startPositionX - currentPositionX) / this.moveSpeed, 0, (this.startPositionY - currentPositionY) / this.moveSpeed);
+		} else {
+			// autoscroll
+			var width = this.domElement.body.clientWidth;
+			var height = this.domElement.body.clientHeight;
+			
+			var screenBorder = 150; // this should probably be a percent, not a fixed value
+			if (currentPositionX < screenBorder) {
+				this.mouseVector.x = -10;
+			}
+			if (currentPositionX > width - screenBorder) {
+				this.mouseVector.x = 10;
+			}
+			if (currentPositionY < screenBorder) {
+				this.mouseVector.z = -10;
+			}
+			if (currentPositionY > height - screenBorder) {
+				this.mouseVector.z = 10;
+			}
 		}
 
-		// autoscroll?
-	
 	},
 	onTouchEnd: function (event) {
 	

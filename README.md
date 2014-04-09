@@ -7,6 +7,6 @@ To do:
 ===
 - [x] Canvas initialization
 - [x] Flat terrain
-- [ ] Moving camera
+- [x] Moving camera
 - [ ] Simple terrain & textured buildings
 - [ ] Mouse click-object intersection
