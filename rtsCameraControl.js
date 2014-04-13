@@ -133,7 +133,7 @@ rtsCameraControl.prototype = {
 			var width = this.domElement.body.clientWidth;
 			var height = this.domElement.body.clientHeight;
 			
-			var screenBorder = 150; // this should probably be a percent, not a fixed value
+			var screenBorder = 10; // this should probably be a percent, not a fixed value
 			if (currentPositionX < screenBorder) {
 				this.mouseVector.x = -10;
 			}

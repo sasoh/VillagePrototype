@@ -52,6 +52,14 @@ function initSampleSceneGeometry() {
 	
 }
 
+function onWindowResize() {
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+}
+
 function init() {
 
 	clock = new THREE.Clock();
@@ -61,6 +69,8 @@ function init() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.setClearColor(0xcccccc, 1);
 	document.body.appendChild(renderer.domElement);
+	
+	window.addEventListener( 'resize', onWindowResize, false );
 
 	// camera
 	var fieldOfView = 75;
