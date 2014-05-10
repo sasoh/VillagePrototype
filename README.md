@@ -8,17 +8,20 @@ To do:
 - [x] Canvas initialization
 - [x] Flat terrain
 - [x] Moving camera
-- [ ] Simple terrain & textured buildings (update: wireframe/solid/clay material enough for this step)
+- [ ] Simple terrain & textured buildings
 - [ ] UI for camera control
-- [ ] Textures
 - [ ] Mouse click-object intersection
 
 How to run:
 --
-No server needed, downloading & extracting the zip from [here](https://github.com/sasoh/VillagePrototype/archive/master.zip) + opening __main.html__ in a WebGL-supporting browser ([Can I use WebGL](http://caniuse.com/webgl)) would be sufficient.
+A webserver is needed + the master from [here](https://github.com/sasoh/VillagePrototype/archive/master.zip) + open __main.html__ in a WebGL-supporting browser ([Can I use WebGL?](http://caniuse.com/webgl)).
 
 Status update:
 ---
+
+__2014-05-10__
+
+Added a simple textured terrain. The problems from earlier were caused by the improper materials my 3d artists supplied. Next thing to do is to redo the building materials & add their meshes to the scene.
 
 __2014-04-21__
 
