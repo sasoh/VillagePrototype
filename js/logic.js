@@ -39,12 +39,10 @@ function initGui() {
 	gui = new dat.GUI();
 	guiControls = new guiText();
 	
-	var cameraFolder = gui.addFolder('Camera');
-	
 	// fov
 	var minFov = 30;
 	var maxFov = 95;
-	var fovController = cameraFolder.add(guiControls, 'fov', minFov, maxFov).listen();
+	var fovController = gui.add(guiControls, 'fov', minFov, maxFov).listen();
 	fovController.onChange(function(value) {
 	
 		camera.fov = value;
@@ -62,7 +60,7 @@ function initGui() {
 	// camera angle
 	var minAngle = 0;
 	var maxAngle = 90;
-	var angleController = cameraFolder.add(guiControls, 'cameraAngle', minAngle, maxAngle)
+	var angleController = gui.add(guiControls, 'cameraAngle', minAngle, maxAngle)
 	angleController.onChange(function(value) {
 	
 		camera.rotation.x = degreesToRadians(-value);
@@ -80,7 +78,7 @@ function initGui() {
 	// ground rotation
 	var minGroundAngle = -180;
 	var maxGroundAngle = 180;
-	var groundAngleController = cameraFolder.add(guiControls, 'groundRotation', minGroundAngle, maxGroundAngle);
+	var groundAngleController = gui.add(guiControls, 'groundRotation', minGroundAngle, maxGroundAngle);
 	groundAngleController.onChange(function(value) {
 	
 		mesh.rotation.z = degreesToRadians(-value);
@@ -93,50 +91,6 @@ function initGui() {
 		controllerActive = true;
 		
 	});
-	
-	// materials
-	var materialsFolder = gui.addFolder('Materials');
-
-	// solid
-	var solidController = materialsFolder.add(guiControls, 'solid');
-	solidController.onChange(function(value) {
-	
-		// var material = new THREE.MeshLambertMaterial( {color: 0xFF0000} );
-		
-		// mesh.traverse(function (child) {
-			// if ( child instanceof THREE.Mesh ) {
-				// child.material = material;
-			// }
-		// });
-		
-	});
-
-	// wireframe
-	var wireController = materialsFolder.add(guiControls, 'wireframe');
-	wireController.onChange(function(value) {
-	
-		// var material = new THREE.MeshBasicMaterial({
-			// wireframe: true,
-			// color: 'blue'
-		// });
-		
-		// mesh.traverse(function (child) {
-			// if ( child instanceof THREE.Mesh ) {
-				// child.material = material;
-			// }
-		// });
-		
-	});
-
-	// textured (unavailable yet)
-	// var texturedController = materialsFolder.add(guiControls, 'textured');
-	// texturedController.onChange(function(value) {
-	
-		// stuff
-		
-	// });
-	
-	// keyboard controls
 	
 }
 
@@ -215,15 +169,15 @@ function init() {
 	window.addEventListener('resize', onWindowResize, false );
 
 	// camera
-	currentFov = 75;
+	currentFov = 45;
 	var aspectRatio = window.innerWidth / window.innerHeight;
 	var nearPlane = 10;
 	var farPlane = 500;
 	camera = new THREE.PerspectiveCamera(currentFov, aspectRatio, nearPlane, farPlane);
 	// raise the camera a bit & rotate toward the ground
-	currentCameraRotation = 60;
-	camera.position.y = 50;
-	camera.position.z = 50;
+	currentCameraRotation = 45;
+	camera.position.y = 25;
+	camera.position.z = 25;
 	camera.rotation.x = degreesToRadians(-currentCameraRotation);
 		
 	// control
@@ -241,9 +195,9 @@ function init() {
     scene.add(ambientLight);
 	
     // directional lighting
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF);
-    directionalLight.position.set(1, 1, 2).normalize();
-    scene.add(directionalLight);
+	var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
+	directionalLight.position.set(0, 1, 0);
+	scene.add(directionalLight);
 	
 }
 

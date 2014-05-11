@@ -5,6 +5,8 @@ function rtsCameraControl(camera, options) {
 	this.domElement = options.domElement || document;
 	this.moveSpeed = options.moveSpeed || 1;
 	this.lookSpeed = options.lookSpeed || 0.1;
+	this.maxFov = 95;
+	this.minFov = 15;
 	this.domElement.addEventListener('keydown', this.onKeyDown.bind(this), false);
 	this.domElement.addEventListener('keyup', this.onKeyUp.bind(this), false);
 	this.domElement.addEventListener('mousedown', this.onTouchStart.bind(this), false );
@@ -43,24 +45,28 @@ function checkMapBounds() {
 rtsCameraControl.prototype = {
 
 	update: function(delta, active) {
+		
+		// movement speed scaling factor according to zoom level
+		var factor = this.camera.fov / this.maxFov;
+		
 		// forward/backward movement will be parallel to the XZ axis
 		if (active == true) {
 			if (this.moveForward) {
-				this.camera.translateZ(-this.moveSpeed * Math.cos(this.camera.rotation.x));
-				this.camera.translateY(-this.moveSpeed * Math.cos(Math.PI / 2 - this.camera.rotation.x));
+				this.camera.translateZ(-this.moveSpeed * Math.cos(this.camera.rotation.x) * factor);
+				this.camera.translateY(-this.moveSpeed * Math.cos(Math.PI / 2 - this.camera.rotation.x) * factor);
 			}
 			if (this.moveBackward) {
-				this.camera.translateZ(this.moveSpeed * Math.cos(this.camera.rotation.x));
-				this.camera.translateY(this.moveSpeed * Math.cos(Math.PI / 2 - this.camera.rotation.x));
+				this.camera.translateZ(this.moveSpeed * Math.cos(this.camera.rotation.x) * factor);
+				this.camera.translateY(this.moveSpeed * Math.cos(Math.PI / 2 - this.camera.rotation.x) * factor);
 			}
 			if (this.moveLeft) {
-				this.camera.translateX(-this.moveSpeed);
+				this.camera.translateX(-this.moveSpeed * factor);
 			}
 			if (this.moveRight) {
-				this.camera.translateX(this.moveSpeed);
+				this.camera.translateX(this.moveSpeed * factor);
 			}
 
-			this.camera.position.add(this.mouseVector);
+			this.camera.position.add(this.mouseVector.multiplyScalar(factor));
 			
 			checkMapBounds();
 		}
@@ -171,11 +177,11 @@ rtsCameraControl.prototype = {
 		
 		var currentFov = this.camera.fov;
 		currentFov -= delta;
-		if (currentFov < 30) {
-			currentFov = 30;
+		if (currentFov < this.minFov) {
+			currentFov = this.minFov;
 		}
-		if (currentFov > 95) {
-			currentFov = 95;
+		if (currentFov > this.maxFov) {
+			currentFov = this.maxFov;
 		}
 		this.camera.fov = currentFov;
 		this.camera.updateProjectionMatrix();
