@@ -8,8 +8,8 @@ To do:
 - [x] Canvas initialization
 - [x] Flat terrain
 - [x] Moving camera
-- [ ] Simple terrain & textured buildings
-- [ ] UI for camera control
+- [x] Simple terrain & textured buildings
+- [x] UI for camera control
 - [ ] Mouse click-object intersection
 
 How to run:
@@ -18,6 +18,10 @@ A webserver is needed + the master from [here](https://github.com/sasoh/VillageP
 
 Status update:
 ---
+
+__2014-05-11__
+
+Added rough building models which don't really fit the terrain, but that's not the point on this iteration. Fiddled with camera settings & added movement speed multiplier changed by zoom level, so zooming in doesn't result in uncontrollable fast movement. Removed material settings from UI.
 
 __2014-05-10__
 
